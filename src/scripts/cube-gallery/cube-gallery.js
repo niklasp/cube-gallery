@@ -1,3 +1,5 @@
+import anime from 'animejs/lib/anime.es.js';
+
 import './cube-gallery.scss';
 
 class CubeGallery {
@@ -10,6 +12,7 @@ class CubeGallery {
     this.domEl = this.DOM.el;
     this.DOM.cubeWrap = this.domEl.querySelector('.cube-wrap');
     this.DOM.parent = this.domEl.parentElement;
+    console.log( parent, this.DOM.parent );
     this.DOM.radio = document.querySelector('.radio-group');
     this.currentClass = '';
     this.DOM.sides = this.DOM.cubeWrap.querySelectorAll('.cube-side');
@@ -18,6 +21,7 @@ class CubeGallery {
 
     this.defaults = {
       width: 'auto',
+      scrollAnimate: true,
     };
 
     this.transforms = {
@@ -70,6 +74,9 @@ class CubeGallery {
     console.log( this.DOM.sides );
     this.initCubeGallery();
     this.addEventListeners();
+    if ( this.options.scrollAnimate ) {
+      this.scrollAnimate();
+    }
   }
 
   initCubeGallery() {
@@ -138,6 +145,42 @@ class CubeGallery {
       this.changeSide( checkedRadio.value );
     } );
   }
+
+  scrollAnimate() {
+    const divAnimation = anime({
+      targets: this.DOM.cubeWrap,
+      keyframes: [
+        {rotateX: 0, rotateY: '-=90'},
+        {rotateX: -90, rotateY: '+=90'},
+        {rotateX: '+=90', rotateY: '-=180'},
+        {rotateY: '-=90'},
+        {rotateX: '+=90', rotateY: '-=90', rotateZ: '+=0'},
+      ],
+      // duration: 4000,
+      autoplay: false,
+      easing: 'linear',
+    });
+
+    this.DOM.parent.style.height = '5000px';
+    this.DOM.cubeWrap.style.transition = 'none';
+    this.domEl.style.position = 'sticky';
+    this.domEl.style.top = '10%';
+
+    function scrollPercent() {
+      const bodyST = document.body.scrollTop;
+      const docST = document.documentElement.scrollTop;
+      const docSH = document.documentElement.scrollHeight;
+      const docCH = document.documentElement.clientHeight;
+      return (docST + bodyST) / (docSH - docCH) * 100;
+    }
+
+    window.addEventListener('scroll', ( e ) => {
+      console.log( e );
+      divAnimation.seek( ( scrollPercent() / 100 ) * divAnimation.duration );
+    });
+  }
+
+
 }
 
 export default CubeGallery;
