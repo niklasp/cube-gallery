@@ -2,6 +2,7 @@
   width: 200px;
   height: 200px;
   perspective: 1000px;
+  transform: translate3d(0,-50%,0);
 }
 
 .cube-wrap {
@@ -39,7 +40,8 @@
 //demo 
 .page-container {
   position: relative;
-  width: 500px;
+  width: 60vw;
+  max-width: 60vh;
   margin: 0 auto;
   padding-top: 50px;
   padding-bottom: 50px;

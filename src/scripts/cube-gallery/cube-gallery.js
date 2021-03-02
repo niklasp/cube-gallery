@@ -167,7 +167,8 @@ class CubeGallery {
     this.DOM.parent.style.height = '5000px';
     this.DOM.cubeWrap.style.transition = 'none';
     this.domEl.style.position = 'sticky';
-    this.domEl.style.top = '10%';
+    console.log( `calc(100vh - ${ this.width }px / 2)` );
+    this.domEl.style.top = '50%';
 
     function scrollPercent() {
       const bodyST = document.body.scrollTop;
