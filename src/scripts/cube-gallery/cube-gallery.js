@@ -149,12 +149,15 @@ class CubeGallery {
   scrollAnimate() {
     const divAnimation = anime({
       targets: this.DOM.cubeWrap,
+      // keyframes: [
+      //   {rotateX: 0, rotateY: '-=90'},
+      //   {rotateX: -90, rotateY: '+=90'},
+      //   {rotateX: '+=90', rotateY: '-=180'},
+      //   {rotateY: '-=90'},
+      //   {rotateX: '+=90', rotateY: '-=90', rotateZ: '+=0'},
+      // ],
       keyframes: [
-        {rotateX: 0, rotateY: '-=90'},
-        {rotateX: -90, rotateY: '+=90'},
-        {rotateX: '+=90', rotateY: '-=180'},
-        {rotateY: '-=90'},
-        {rotateX: '+=90', rotateY: '-=90', rotateZ: '+=0'},
+        {rotateX: '+=720', rotateY: '+=360'},
       ],
       // duration: 4000,
       autoplay: false,
