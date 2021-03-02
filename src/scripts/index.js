@@ -1,7 +1,8 @@
 import '../styles/index.scss';
+import CubeGallery from './cube-gallery/cube-gallery';
 
 if (process.env.NODE_ENV === 'development') {
   require('../index.html');
 }
 
-console.log('webpack starterkit');
+new CubeGallery( '.cube-gallery' );
