@@ -140,10 +140,12 @@ class CubeGallery {
   }
 
   addEventListeners() {
-    this.DOM.radio.addEventListener( 'change', () => {
-      var checkedRadio = this.DOM.radio.querySelector( ':checked' );
-      this.changeSide( checkedRadio.value );
-    } );
+    if ( this.DOM.radio ) {
+      this.DOM.radio.addEventListener( 'change', () => {
+        var checkedRadio = this.DOM.radio.querySelector( ':checked' );
+        this.changeSide( checkedRadio.value );
+      } );
+    }
   }
 
   scrollAnimate() {
