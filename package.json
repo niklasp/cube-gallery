@@ -1,6 +1,6 @@
 {
   "name": "cube-gallery",
-  "version": "1.1.0",
+  "version": "2.0.0",
   "description": "Simple css 3d cube for all your media and content.",
   "scripts": {
     "lint": "npm run lint:styles; npm run lint:scripts",
