@@ -1,33 +1,71 @@
-# Webpack Frontend Starterkit
+# Cube Gallery
 
 [![Dependabot badge](https://flat.badgen.net/dependabot/wbkd/webpack-starter?icon=dependabot)](https://dependabot.com/)
 
-A lightweight foundation for your next webpack based frontend project.
+CSS 3d cube gallery for all your media 
 
 ### Installation
 
 ```
-npm install
+npm i --save cube-gallery
 ```
 
-### Start Dev Server
+### Getting Started
 
 ```
-npm start
+    <div class="cube-gallery">
+      <div class="cube-wrap">
+        <div class="cube-side">
+          <div class="side-bg">
+            <img src="https://images.unsplash.com/photo-1614648718611-0635f29016cb?ixid=MXwxMjA3fDB8MHxlZGl0b3JpYWwtZmVlZHw0fHx8ZW58MHx8fA%3D%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=900&q=60" />
+          </div>
+          <div class="side-content">
+            <a href="#">Front</a>
+          </div>
+        </div>
+        <div class="cube-side">
+          <div class="side-bg">
+            <div class="" style="background: #f2f; width: 100%; height: 100%;"></div>
+          </div>
+          <div class="side-content">
+            <a href="#">Right</a>
+          </div>
+        </div>
+        <div class="cube-side">
+          <div class="side-bg">
+            <!-- <img src="https://images.unsplash.com/photo-1614676314170-3eb1d98d0a25?ixid=MXwxMjA3fDB8MHxlZGl0b3JpYWwtZmVlZHwxOXx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=900&q=60" /> -->
+            <div class="" style="background: #2ff; width: 100%; height: 100%;"></div>
+          </div>
+          <div class="side-content">
+            <a href="#">Back</a>
+          </div>
+        </div>
+        <div class="cube-side">
+          <div class="side-bg">
+            <!-- <img src="https://images.unsplash.com/photo-1614676166964-c25efc2abd3b?ixid=MXwxMjA3fDB8MHxlZGl0b3JpYWwtZmVlZHwzMXx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=900&q=60" /> -->
+            <div class="" style="background: #ff2; width: 100%; height: 100%;"></div>
+          </div>
+          <div class="side-content">
+            <a href="#">Left</a>
+          </div>
+        </div>
+        <div class="cube-side">
+          <div class="side-bg">
+            <img src="https://images.unsplash.com/photo-1614613806008-b6e485c050e9?ixid=MXwxMjA3fDB8MHxlZGl0b3JpYWwtZmVlZHw2OHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=900&q=60" />
+          </div>
+          <div class="side-content">
+            <a href="#">Top</a>
+          </div>
+        </div>
+        <div class="cube-side">
+          <div class="side-bg">
+            <img src="https://images.unsplash.com/photo-1614622539136-fd8e06f32f31?ixid=MXwxMjA3fDB8MHxlZGl0b3JpYWwtZmVlZHw1N3x8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=900&q=60" />
+          </div>
+          <div class="side-content">
+            <a href="#">Bottom</a>
+          </div>
+        </div>
+      </div>
 ```
 
-### Build Prod Version
-
-```
-npm run build
-```
-
-### Features:
-
-- ES6 Support via [babel](https://babeljs.io/) (v7)
-- JavaScript Linting via [eslint-loader](https://github.com/MoOx/eslint-loader)
-- SASS Support via [sass-loader](https://github.com/jtangelder/sass-loader)
-- Autoprefixing of browserspecific CSS rules via [postcss](https://postcss.org/) and [autoprefixer](https://github.com/postcss/autoprefixer)
-- Style Linting via [stylelint](https://stylelint.io/)
-
-When you run `npm run build` we use the [mini-css-extract-plugin](https://github.com/webpack-contrib/mini-css-extract-plugin) to move the css to a separate file. The css file gets included in the head of the `index.html`.
+See demo/index.html for more

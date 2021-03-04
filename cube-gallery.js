@@ -196,8 +196,6 @@ class CubeGallery {
       divAnimation.seek( ( scrollPercent() / 100 ) * divAnimation.duration );
     });
   }
-
-
 }
 
 export default CubeGallery;

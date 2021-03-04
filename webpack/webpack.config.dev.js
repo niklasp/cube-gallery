@@ -20,14 +20,14 @@ module.exports = merge(common, {
       'process.env.NODE_ENV': JSON.stringify('development'),
     }),
     new StylelintPlugin({
-      files: Path.join('src', '**/*.s?(a|c)ss'),
+      files: Path.join('demo', '**/*.s?(a|c)ss'),
     }),
   ],
   module: {
     rules: [
       {
         test: /\.js$/,
-        include: Path.resolve(__dirname, '../src'),
+        include: Path.resolve(__dirname, '../demo'),
         enforce: 'pre',
         loader: 'eslint-loader',
         options: {
@@ -40,7 +40,7 @@ module.exports = merge(common, {
       },
       {
         test: /\.js$/,
-        include: Path.resolve(__dirname, '../src'),
+        include: Path.resolve(__dirname, '../demo'),
         loader: 'babel-loader',
       },
       {
