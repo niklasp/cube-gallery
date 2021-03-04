@@ -11,10 +11,10 @@ class CubeGallery {
     this.domEl = this.DOM.el;
     this.DOM.cubeWrap = this.domEl.querySelector('.cube-wrap');
     this.DOM.parent = this.domEl.parentElement;
-    this.DOM.radio = document.querySelector('.radio-group');
     this.currentClass = '';
     this.DOM.sides = this.DOM.cubeWrap.querySelectorAll('.cube-side');
     this.anime = anime( this.DOM.cubeWrap );
+    this.DOM.rotateWrap = this.domEl.querySelector('.rotate-wrap');
 
     this.width = 0;
 
@@ -100,7 +100,7 @@ class CubeGallery {
       side.translateZ = this.width / 2;
     } );
 
-    this.updateTransforms();
+    this.updateTransforms( this.DOM.cubeWrap );
   }
 
   rotate( xy ) {
@@ -113,7 +113,7 @@ class CubeGallery {
     this.transforms.wrap.rotateX = rotX + x;
     this.transforms.wrap.rotateY = rotY + y;
 
-    this.updateTransforms();
+    this.updateTransforms( this.DOM.cubeWrap );
 
     // this.DOM.cubeWrap.style.transition = 'none';
   }
@@ -148,12 +148,12 @@ class CubeGallery {
       this.animeRelativeRot( 90, 0 );
     }
 
-    this.updateTransforms();
+    this.updateTransforms( this.DOM.cubeWrap );
   }
 
-  updateTransforms() {
+  updateTransforms( domEl ) {
     const wrapTransformString = `translateX(${ this.transforms.wrap.translateX }px) translateY(${ this.transforms.wrap.translateY }px) translateZ(${ this.transforms.wrap.translateZ }px) rotateX(${ this.transforms.wrap.rotateX }deg) rotateY(${ this.transforms.wrap.rotateY }deg)`;
-    this.DOM.cubeWrap.style.transform = wrapTransformString;
+    domEl.style.transform = wrapTransformString;
 
     [ ...this.DOM.sides ].forEach( ( el, idx ) => {
       const transformString = `rotateX(${ this.transforms.sides[idx].rotateX }deg) rotateY(${ this.transforms.sides[idx].rotateY }deg) translateZ(${ this.transforms.sides[idx].translateZ }px)`;
