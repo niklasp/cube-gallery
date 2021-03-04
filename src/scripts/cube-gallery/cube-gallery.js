@@ -3,8 +3,7 @@ import anime from 'animejs/lib/anime.es.js';
 import './cube-gallery.scss';
 
 class CubeGallery {
-
-  constructor( selector ) {
+  constructor( selector, args ) {
     this.DOM = {
       selector: selector,
       el: document.querySelector( selector ),
@@ -12,16 +11,22 @@ class CubeGallery {
     this.domEl = this.DOM.el;
     this.DOM.cubeWrap = this.domEl.querySelector('.cube-wrap');
     this.DOM.parent = this.domEl.parentElement;
-    console.log( parent, this.DOM.parent );
     this.DOM.radio = document.querySelector('.radio-group');
     this.currentClass = '';
     this.DOM.sides = this.DOM.cubeWrap.querySelectorAll('.cube-side');
+    this.anime = anime( this.DOM.cubeWrap );
 
     this.width = 0;
 
     this.defaults = {
       width: 'auto',
       scrollAnimate: true,
+      swiping: true,
+      scrollKeyframes: [
+        {rotateX: '+=720', rotateY: '+=360'},
+      ],
+      rotationDuration: 500,
+      easing: 'easeInOutQuad',
     };
 
     this.transforms = {
@@ -66,12 +71,10 @@ class CubeGallery {
       },
     };
 
-    //todo passed params
-    const params = {};
+    const params = { ...args };
 
     this.options = Object.assign( this.defaults, params );
 
-    console.log( this.DOM.sides );
     this.initCubeGallery();
     this.addEventListeners();
     if ( this.options.scrollAnimate ) {
@@ -80,11 +83,6 @@ class CubeGallery {
   }
 
   initCubeGallery() {
-    console.log( 'init gallery on', this.domEl );
-
-    //demo only
-    var cube = document.querySelector('.cube');
-
     this.setWidths();
   }
 
@@ -105,25 +103,49 @@ class CubeGallery {
     this.updateTransforms();
   }
 
+  rotate( xy ) {
+    const { x = 0, y = 0 } = xy;
+
+    const rotX = parseFloat( anime.get( this.DOM.cubeWrap, 'rotateX' ) );
+    const rotY = parseFloat( anime.get( this.DOM.cubeWrap, 'rotateY' ) );
+
+    this.DOM.cubeWrap.style.transition = 'transform 0.5s';
+    this.transforms.wrap.rotateX = rotX + x;
+    this.transforms.wrap.rotateY = rotY + y;
+
+    this.updateTransforms();
+
+    // this.DOM.cubeWrap.style.transition = 'none';
+  }
+
+  animeRelativeRot( toX, toY ) {
+    const rotXDiff = ( parseFloat( anime.get( this.DOM.cubeWrap, 'rotateX' ) ) - toX ) % 360;
+    const rotYDiff = ( parseFloat( anime.get( this.DOM.cubeWrap, 'rotateY' ) ) - toY ) % 360;
+
+    anime({
+      targets: this.DOM.cubeWrap,
+      rotateX: `-=${ rotXDiff }deg`,
+      rotateY: `-=${ rotYDiff }deg`,
+      duration: this.options.rotationDuration,
+      easing: this.options.easing,
+    });
+  }
+
   changeSide( idx ) {
+    // this.DOM.cubeWrap.style.transition = 'transform 0.5s';
+
     if ( idx === 0 || idx === 'front' ) {
-      this.transforms.wrap.rotateX = 0;
-      this.transforms.wrap.rotateY = 0;
+      this.animeRelativeRot( 0, 0 );
     } else if ( idx === 1 || idx === 'right' ) {
-      this.transforms.wrap.rotateX = 0;
-      this.transforms.wrap.rotateY = -90;
+      this.animeRelativeRot( 0, -90 );
     } else if ( idx === 2 || idx === 'back' ) {
-      this.transforms.wrap.rotateX = 0;
-      this.transforms.wrap.rotateY = -180;
+      this.animeRelativeRot( 0, -180 );
     } else if ( idx === 3 || idx === 'left' ) {
-      this.transforms.wrap.rotateX = 0;
-      this.transforms.wrap.rotateY = 90;
+      this.animeRelativeRot( 0, 90 );
     } else if ( idx === 4 || idx === 'top' ) {
-      this.transforms.wrap.rotateX = -90;
-      this.transforms.wrap.rotateY = 0;
+      this.animeRelativeRot( -90, 0 );
     } else if ( idx === 5 || idx === 'bottom' ) {
-      this.transforms.wrap.rotateX = 90;
-      this.transforms.wrap.rotateY = 0;
+      this.animeRelativeRot( 90, 0 );
     }
 
     this.updateTransforms();
@@ -151,25 +173,14 @@ class CubeGallery {
   scrollAnimate() {
     const divAnimation = anime({
       targets: this.DOM.cubeWrap,
-      // keyframes: [
-      //   {rotateX: 0, rotateY: '-=90'},
-      //   {rotateX: -90, rotateY: '+=90'},
-      //   {rotateX: '+=90', rotateY: '-=180'},
-      //   {rotateY: '-=90'},
-      //   {rotateX: '+=90', rotateY: '-=90', rotateZ: '+=0'},
-      // ],
-      keyframes: [
-        {rotateX: '+=720', rotateY: '+=360'},
-      ],
-      // duration: 4000,
+      keyframes: this.options.scrollKeyframes,
       autoplay: false,
-      easing: 'linear',
+      easing: 'easeInOutCubic',
     });
 
     this.DOM.parent.style.height = '5000px';
     this.DOM.cubeWrap.style.transition = 'none';
     this.domEl.style.position = 'sticky';
-    console.log( `calc(100vh - ${ this.width }px / 2)` );
     this.domEl.style.top = '50%';
 
     function scrollPercent() {
@@ -181,7 +192,7 @@ class CubeGallery {
     }
 
     window.addEventListener('scroll', ( e ) => {
-      console.log( e );
+      this.DOM.cubeWrap.style.transition = 'none';
       divAnimation.seek( ( scrollPercent() / 100 ) * divAnimation.duration );
     });
   }

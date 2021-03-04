@@ -25,7 +25,7 @@ body .side-content a {
 }
 
 body {
-  background-image: url(https://pbs.twimg.com/media/EvfsXMxXIAQLAEX?format=jpg&name=medium);
+  // background-image: url(https://pbs.twimg.com/media/EvfsXMxXIAQLAEX?format=jpg&name=medium);
   // background-attachment: fixed;
   background-size: 33.333%;
   background-origin: center;
@@ -33,17 +33,40 @@ body {
 }
 
 body .cube-gallery {
-  // mix-blend-mode: difference;
+  mix-blend-mode: difference;
+  // background-blend-mode: difference;
+}
+
+div.intro {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
 }
 
 h1 {
   word-wrap: break-word;
   // mix-blend-mode: difference;
-  // color: #fff;
+  // color: #ff2;
+  color: transparent;
+  width: 100%;
   margin-top: 30vh;
   padding-bottom: 30vh;
-  width: 100%;
-  text-align: center;
-  font-size: 150px;
+  font-size: 30vh;
   text-transform: uppercase;
+  margin: 0;
+  padding: 0;
+  text-align: center;
+  // max-width: 500px;
+  -webkit-text-stroke-width: 5px;
+  -webkit-text-stroke-color: #ff22d2;
+}
+
+button {
+  z-index: 999;
 }

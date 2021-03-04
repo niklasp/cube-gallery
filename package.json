@@ -1,5 +1,5 @@
 {
-  "name": "webpack-starter",
+  "name": "cube-gallery",
   "version": "1.0.0",
   "description": "A light foundation for your next frontend project based on webpack.",
   "scripts": {
@@ -58,6 +58,10 @@
   "dependencies": {
     "@babel/polyfill": "^7.12.1",
     "animejs": "^3.2.1",
-    "core-js": "^3.8.1"
-  }
+    "core-js": "^3.8.1",
+    "swipe-listener": "^1.3.0",
+    "vanilla-swipe": "^2.3.0"
+  },
+  "homepage": "https://github.com/wbkd/webpack-starter#readme",
+  "main": "src/cube-gallery/cube-gallery.js"
 }
