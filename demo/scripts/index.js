@@ -30,19 +30,19 @@ const toBottom = document.querySelector( 'button.tobottom' );
 
 
 left.addEventListener( 'click', () => {
-  cg.rotate( { y: -90 } );
+  cg.rotate( { y: -90 }, true );
 });
 
 right.addEventListener( 'click', () => {
-  cg.rotate( { y: 90 } );
+  cg.rotate( { y: 90 }, true );
 });
 
 bottom.addEventListener( 'click', () => {
-  cg.rotate( { x: -90 } );
+  cg.rotate( { x: -90 }, true );
 });
 
 top.addEventListener( 'click', () => {
-  cg.rotate( { x: 90 } );
+  cg.rotate( { x: 90 }, true );
 });
 
 

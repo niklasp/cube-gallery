@@ -11,6 +11,7 @@
   position: relative;
   transform-style: preserve-3d;
   transition: transform 0.7s;
+  transform-origin: center center;
 }
 
 .cube-side {

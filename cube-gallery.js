@@ -68,6 +68,7 @@ class CubeGallery {
         translateZ: 0,
         rotateX: 0,
         rotateY: 0,
+        rotateZ: 0,
       },
     };
 
@@ -84,6 +85,10 @@ class CubeGallery {
 
   initCubeGallery() {
     this.setWidths();
+    [ ...this.DOM.sides ].forEach( ( el, idx ) => {
+      const transformString = `rotateX(${ this.transforms.sides[idx].rotateX }deg) rotateY(${ this.transforms.sides[idx].rotateY }deg) translateZ(${ this.transforms.sides[idx].translateZ }px)`;
+      el.style.transform = transformString;
+    } );
   }
 
   setWidths() {
@@ -103,15 +108,27 @@ class CubeGallery {
     this.updateTransforms( this.DOM.cubeWrap );
   }
 
-  rotate( xy ) {
+  rotate( xy, relative=false ) {
     const { x = 0, y = 0 } = xy;
 
     const rotX = parseFloat( anime.get( this.DOM.cubeWrap, 'rotateX' ) );
     const rotY = parseFloat( anime.get( this.DOM.cubeWrap, 'rotateY' ) );
 
     this.DOM.cubeWrap.style.transition = 'transform 0.5s';
-    this.transforms.wrap.rotateX = rotX + x;
-    this.transforms.wrap.rotateY = rotY + y;
+
+    if ( ! relative ) {
+      this.transforms.wrap.rotateX = rotX + x;
+      this.transforms.wrap.rotateY = rotY + y;
+    } else {
+      console.log( 'relative rotate' );
+      const rotZ = parseFloat( anime.get( this.DOM.cubeWrap, 'rotateZ' ) );
+
+      // this.transforms.wrap.rotateY = rotY + y;
+      this.transforms.wrap.rotateX = rotX;
+      this.transforms.wrap.rotateY = rotY;
+      this.transforms.wrap.rotateZ = rotZ + y;
+      // this.transforms.wrap.rotateZ = rotZ + y;
+    }
 
     this.updateTransforms( this.DOM.cubeWrap );
 
@@ -152,13 +169,8 @@ class CubeGallery {
   }
 
   updateTransforms( domEl ) {
-    const wrapTransformString = `translateX(${ this.transforms.wrap.translateX }px) translateY(${ this.transforms.wrap.translateY }px) translateZ(${ this.transforms.wrap.translateZ }px) rotateX(${ this.transforms.wrap.rotateX }deg) rotateY(${ this.transforms.wrap.rotateY }deg)`;
+    const wrapTransformString = `translateX(${ this.transforms.wrap.translateX }px) translateY(${ this.transforms.wrap.translateY }px) translateZ(${ this.transforms.wrap.translateZ }px) rotateX(${ this.transforms.wrap.rotateX }deg) rotateY(${ this.transforms.wrap.rotateY }deg) rotateZ(${ this.transforms.wrap.rotateZ }deg)`;
     domEl.style.transform = wrapTransformString;
-
-    [ ...this.DOM.sides ].forEach( ( el, idx ) => {
-      const transformString = `rotateX(${ this.transforms.sides[idx].rotateX }deg) rotateY(${ this.transforms.sides[idx].rotateY }deg) translateZ(${ this.transforms.sides[idx].translateZ }px)`;
-      el.style.transform = transformString;
-    } );
   }
 
   addEventListeners() {
