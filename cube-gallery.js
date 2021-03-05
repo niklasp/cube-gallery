@@ -1,4 +1,5 @@
 import anime from 'animejs/lib/anime.es.js';
+import SwipeListener from 'swipe-listener';
 
 import './cube-gallery.scss';
 
@@ -170,6 +171,16 @@ class CubeGallery {
         var checkedRadio = this.DOM.radio.querySelector( ':checked' );
         this.changeSide( checkedRadio.value );
       } );
+    }
+
+    if ( this.options.swiping ) {
+      var container = this.domEl;
+      var listener = SwipeListener(container);
+      // console.log( listener );
+      container.addEventListener('swipe', function (e) {
+        e.preventDefault();
+        alert(JSON.stringify(e.detail));
+      });
     }
   }
 
