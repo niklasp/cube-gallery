@@ -119,15 +119,6 @@ class CubeGallery {
     if ( ! relative ) {
       this.transforms.wrap.rotateX = rotX + x;
       this.transforms.wrap.rotateY = rotY + y;
-    } else {
-      console.log( 'relative rotate' );
-      const rotZ = parseFloat( anime.get( this.DOM.cubeWrap, 'rotateZ' ) );
-
-      // this.transforms.wrap.rotateY = rotY + y;
-      this.transforms.wrap.rotateX = rotX;
-      this.transforms.wrap.rotateY = rotY;
-      this.transforms.wrap.rotateZ = rotZ + y;
-      // this.transforms.wrap.rotateZ = rotZ + y;
     }
 
     this.updateTransforms( this.DOM.cubeWrap );
