@@ -79,9 +79,6 @@ class CubeGallery {
 
     this.initCubeGallery();
     this.addEventListeners();
-    if ( this.options.scrollAnimate ) {
-      this.scrollAnimate();
-    }
   }
 
   initCubeGallery() {
@@ -173,30 +170,44 @@ class CubeGallery {
       } );
     }
 
+    if ( this.options.scrollAnimate ) {
+      this.divAnimation = anime({
+        targets: this.DOM.cubeWrap,
+        keyframes: this.options.scrollKeyframes,
+        autoplay: false,
+        easing: 'easeInOutCubic',
+        duration: 1000,
+      });
+      this.DOM.parent.style.height = '5000px';
+      this.DOM.cubeWrap.style.transition = 'none';
+      this.domEl.style.position = 'sticky';
+      this.domEl.style.top = '50%';
+
+      window.addEventListener('scroll', this.onScroll.bind( this ));
+    }
+
     if ( this.options.swiping ) {
-      var container = this.domEl;
-      var listener = SwipeListener(container);
+      var container = document.querySelector('.page-container');
+      var listener = SwipeListener(container, {
+        preventScroll: true,
+      });
+      const cg = this;
       // console.log( listener );
       container.addEventListener('swipe', function (e) {
-        e.preventDefault();
-        alert(JSON.stringify(e.detail));
+        if (e.detail.directions.right) {
+          cg.rotate( { y: 90, x: 0 } );
+        } else if (e.detail.directions.left) {
+          cg.rotate( { y: -90, x:0 } );
+        } else if (e.detail.directions.top) {
+          cg.rotate( { y: 0, x:90 } );
+        } else if (e.detail.directions.bottom) {
+          cg.rotate( { y: 0, x:-90 } );
+        }
       });
     }
   }
 
-  scrollAnimate() {
-    const divAnimation = anime({
-      targets: this.DOM.cubeWrap,
-      keyframes: this.options.scrollKeyframes,
-      autoplay: false,
-      easing: 'easeInOutCubic',
-    });
-
-    this.DOM.parent.style.height = '5000px';
-    this.DOM.cubeWrap.style.transition = 'none';
-    this.domEl.style.position = 'sticky';
-    this.domEl.style.top = '50%';
-
+  onScroll( e ) {
     function scrollPercent() {
       const bodyST = document.body.scrollTop;
       const docST = document.documentElement.scrollTop;
@@ -205,10 +216,8 @@ class CubeGallery {
       return (docST + bodyST) / (docSH - docCH) * 100;
     }
 
-    window.addEventListener('scroll', ( e ) => {
-      this.DOM.cubeWrap.style.transition = 'none';
-      divAnimation.seek( ( scrollPercent() / 100 ) * divAnimation.duration );
-    });
+    this.DOM.cubeWrap.style.transition = 'none';
+    this.divAnimation.seek( ( scrollPercent() / 100 ) * this.divAnimation.duration );
   }
 }
 
